@@ -65,7 +65,7 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {
   let emptyCell = 0;
 
-  for (let y = HEIGHT; y !== null; y--){
+  for (let y = HEIGHT - 1; y !== null; y--){
     if (board[y][x] === null){
       return y;
     }
