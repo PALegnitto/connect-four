@@ -63,16 +63,24 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return bottom empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 5
-  return 5;
+  let emptyCell = 0;
+
+  for (let y = HEIGHT; y !== null; y--){
+    if (board[y][x] === null){
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
   const piece = document.createElement("div");
+  const cell = document.getElementById(`${y}-${x}`);
   piece.classList.add("piece");
   piece.classList.add(`p${currPlayer}`);
+  cell.append(piece);
 }
 
 /** endGame: announce game end */
@@ -94,7 +102,7 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
@@ -103,10 +111,12 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
+  if (board[0].includes(null)){
+    alert('Tied Game!');
+  }
 
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
+  (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
